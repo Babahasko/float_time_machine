@@ -24,5 +24,3 @@ streamlit app main.py
 
 ### Запуск через docker
 
-(^_^)
-
