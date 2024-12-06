@@ -3,7 +3,7 @@ name: float_machine_service
 services:
   app:
     build: .
-    command: sh "streamlit run main.py"
+#    command: sh "streamlit run main.py"
     restart: always
     ports:
       - "8501:8501"
