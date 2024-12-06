@@ -7,7 +7,9 @@ import numpy as np
 #     model = pickle.load(f)
 
 # Настройка страницы
-st.set_page_config(page_title="ML Модель", layout="wide")
+st.set_page_config(
+    page_title="ML Модель",
+    layout="wide")
 
 # Заголовок
 st.title("ML Модель: Загрузка текста и предсказание")
