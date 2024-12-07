@@ -5,6 +5,7 @@ from utils import validate_data
 from utils import custom_info
 from utils import model_pipeline
 from utils import logger
+from utils import show_colored_optimization
 
 # Настройка страницы
 st.set_page_config(
@@ -12,7 +13,7 @@ st.set_page_config(
     layout="wide")
 
 # Инициализация переменных, в которых будут храниться данные сессии
-params = ['uploaded_file', 'test_file']
+params = ['uploaded_file', 'test_file', 'optimization_result']
 for param in params:
     if param not in st.session_state:
         st.session_state[param] = 'Тут пока нет данных'
@@ -48,7 +49,6 @@ uploaded_test_file = st.file_uploader("Выберите тестовый, кот
 # Если файл был загружен
 if uploaded_test_file is not None:
     test = pd.read_csv(uploaded_test_file)
-    logger.info(f"{dir(test)}")
     st.write(test)
     # Сохраняем данные в сессии
     st.session_state['test_file'] = test
@@ -61,8 +61,20 @@ if st.button("Начать оптимизацию!"):
         optimization_result = model_pipeline(st.session_state['uploaded_file'], st.session_state['test_file'])
         st.write('Результат оптимизации')
         st.write(optimization_result)
+        st.session_state['optimization_result'] = optimization_result
     else:
         st.info("Пожалуйста, загрузите оба файла для их оптимизации.")
 
-
-
+if st.button("Показать изменения"):
+    # Проверяем наличие данных в сессии
+    if 'test_file' in st.session_state and 'uploaded_file' in st.session_state and 'optimization_result' in st.session_state:
+        # Подкрашиваем изменения
+        optimization_result_highlighted = show_colored_optimization(st.session_state["uploaded_file"], st.session_state['test_file'], st.session_state["optimization_result"])
+        # st.write('Исходная required_paramaters_matrix')
+        # st.write(required_paramaters_matrix)
+        # st.write('optimization_result')
+        # st.write(optimization_result)
+        st.write('Зеленым цветом выделены изменённые значения')
+        st.write(optimization_result_highlighted)
+    else:
+        st.info("Пожалуйста, Проведите оптимизацию перед показом изменений.")
