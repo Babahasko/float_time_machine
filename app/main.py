@@ -4,10 +4,12 @@ import io
 from utils import sort_columns
 from utils import validate_data
 from utils import custom_info
+from utils import load_validation_input_config
 
-# Загрузка обученной модели
-# with open("model.pkl", "rb") as f:
-#     model = pickle.load(f)
+import json
+
+# Загружаем конфиг для валидации данных входной выборки
+validation_input_config = load_validation_input_config()
 
 # Настройка страницы
 st.set_page_config(
@@ -27,7 +29,10 @@ if uploaded_file is not None:
     df_sorted = sort_columns(df)
 
     #Проверка валидации данных и вывод сообщения пользователю
-    message, color = validate_data(df_sorted)
+    required_columns = validation_input_config['required_columns']
+    expected_dtypes = validation_input_config['expected_dtypes']
+
+    message, color = validate_data(df_sorted,required_columns, expected_dtypes )
     custom_info(message, color)
 
     # Выводим DataFrame на экран c сортировкой столбцов
