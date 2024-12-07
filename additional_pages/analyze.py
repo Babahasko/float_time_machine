@@ -5,7 +5,7 @@ def show():
     st.title("Аналитика работы ML модели 🧠")
     if st.button("Показать изменения"):
         # Проверяем наличие данных в сессии
-        if 'test_file' in st.session_state and 'uploaded_file' in st.session_state and 'optimization_result' in st.session_state:
+        if st.session_state['optimization_result'] is not None:
             # Подкрашиваем изменения
             st.write("Результаты оптимизации:")
             optimization_result_highlighted = show_colored_optimization(
