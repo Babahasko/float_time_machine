@@ -1,6 +1,10 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import matplotlib
+
+#функция для отображения графиков в отдельном окне
+matplotlib.use('TkAgg')
 
 # === Примерные данные (их можно заменить на реальный источник данных) ===
 time = ['2024-07-08 12:15', '2024-07-15 12:00']
