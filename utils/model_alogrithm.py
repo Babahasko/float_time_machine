@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 
 def model_pipeline(df, test):
+
     # Отбираем признаки
     X = df[['MEAS_DT', 'Cu_oreth', 'Ni_oreth', 'Ore_mass', 'Mass_1', 'Mass_2', 'Dens_4',
             'Mass_4', 'Vol_4', 'Cu_4F', 'Ni_4F', 'Ni_4.1C', 'Ni_4.1T', 'FM_4.1_A',
