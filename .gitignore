@@ -165,4 +165,5 @@ data/
 deploy/
 app/example.py
 example/
+example.py
 .venv_production/
