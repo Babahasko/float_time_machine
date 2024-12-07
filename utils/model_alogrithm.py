@@ -1,8 +1,9 @@
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
+from .model_algorithm_helper import round_for_restrictions
 
-def model_pipeline(df, test):
 
+def model_pipeline(df, test, k = 10):
     # Отбираем признаки
     X = df[['MEAS_DT', 'Cu_oreth', 'Ni_oreth', 'Ore_mass', 'Mass_1', 'Mass_2', 'Dens_4',
             'Mass_4', 'Vol_4', 'Cu_4F', 'Ni_4F', 'Ni_4.1C', 'Ni_4.1T', 'FM_4.1_A',
@@ -59,7 +60,6 @@ def model_pipeline(df, test):
     # Будем смотреть топ 5 наиболее похожих ситуаций
     # значение k можно регулировать
     knn_features_values = knn_features.values
-    k = 5
     nbrs = NearestNeighbors(n_neighbors=k, metric='cosine')
     nbrs.fit(knn_features_values)
 
@@ -81,10 +81,11 @@ def model_pipeline(df, test):
             actual = indices[i, 0]
             sravn = indices[i, b]
             # близость со сравниваемой строкой является числом от 0 до 1. 0 максимальная близость.
-            # (1-sravn_prox)- штраф который влияет на Ni_rec в зависимости от близости
+            # (1-(sravn_prox* n_features)- штраф который влияет на Ni_rec в зависимости от близости
+            # Это означает, что для данных с большим количеством признаков схожесть будет более критичной, и штраф для схожих строк будет выше.
             sravn_prox = distances[i, b]
             Ni_rec_actual = X_agreg.iloc[actual]['Ni_rec']
-            Ni_rec_sravn = X_agreg.iloc[sravn]['Ni_rec'] * (1 - sravn_prox)
+            Ni_rec_sravn = X_agreg.iloc[sravn]['Ni_rec'] * (1 - (sravn_prox * knn_features.shape[1]))
             if (Ni_rec_sravn > Ni_rec_actual) and (Ni_rec_sravn > l):
                 l = Ni_rec_sravn
                 p = sravn
@@ -110,9 +111,10 @@ def model_pipeline(df, test):
 
     # разворачиваем наши диапазоны для теста
     df_test = pd.merge(testovaya, test_ag_predict, on=['2h_interval'], how='left')[test.columns.values]
-
+    # Округления
+    df_test = round_for_restrictions(df_test)
     # проверка
-    if df_test.shape[0] == test.shape[0]:
+    if (df_test.shape[0] == test.shape[0]) and ((df_test.isna().sum().sum()) == 0):
         return df_test
     else:
-        return f'Ошибка в размерностях, возможно отсутствие данных в памяти'
+        print('Ошибка в размерностях, возможно отсутствие данных в памяти')
