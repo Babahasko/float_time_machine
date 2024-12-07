@@ -4,7 +4,8 @@ import numpy as np
 import pandas as pd
 import io
 from utils import sort_columns
-
+from utils import validate_data
+from utils import custom_info
 # Загрузка обученной модели
 # with open("model.pkl", "rb") as f:
 #     model = pickle.load(f)
@@ -26,6 +27,9 @@ if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     df_sorted = sort_columns(df)
 
+    #Проверка валидации данных и вывод сообщения пользователю
+    message, color = validate_data(df_sorted)
+    custom_info(message, color)
 
     # Выводим DataFrame на экран c сортировкой столбцов
     st.write("Содержимое CSV файла:")
