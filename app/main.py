@@ -1,11 +1,10 @@
 import streamlit as st
-import pickle
-import numpy as np
 import pandas as pd
 import io
 from utils import sort_columns
 from utils import validate_data
 from utils import custom_info
+
 # Загрузка обученной модели
 # with open("model.pkl", "rb") as f:
 #     model = pickle.load(f)
