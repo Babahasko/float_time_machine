@@ -49,7 +49,6 @@ uploaded_test_file = st.file_uploader("Выберите тестовый, кот
 # Если файл был загружен
 if uploaded_test_file is not None:
     test = pd.read_csv(uploaded_test_file)
-    logger.info(f"{dir(test)}")
     st.write(test)
     # Сохраняем данные в сессии
     st.session_state['test_file'] = test
@@ -70,12 +69,12 @@ if st.button("Показать изменения"):
     # Проверяем наличие данных в сессии
     if 'test_file' in st.session_state and 'uploaded_file' in st.session_state and 'optimization_result' in st.session_state:
         # Подкрашиваем изменения
-        optimization_result_colored = show_colored_optimization(st.session_state["uploaded_file"], st.session_state['test_file'], st.session_state["optimization_result"])
+        optimization_result_highlighted = show_colored_optimization(st.session_state["uploaded_file"], st.session_state['test_file'], st.session_state["optimization_result"])
         # st.write('Исходная required_paramaters_matrix')
         # st.write(required_paramaters_matrix)
         # st.write('optimization_result')
         # st.write(optimization_result)
-        # st.write('Зеленым цветом выделены изменённые значения')
-        st.write(optimization_result_colored)
+        st.write('Зеленым цветом выделены изменённые значения')
+        st.write(optimization_result_highlighted)
     else:
         st.info("Пожалуйста, Проведите оптимизацию перед показом изменений.")
