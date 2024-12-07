@@ -17,7 +17,7 @@ pip install -r requirements.txt
 Переходим в рабочую директорию и запускаем приложение
 ```shell
 cd float_time_machine/app
-streamlit app main.py
+streamlit run main.py
 ```
 
 После запуска у вас откроется приложение в окне браузера
