@@ -48,14 +48,14 @@
 Клонируем репозиторий
 ```shell
 git clone https://github.com/Babahasko/float_time_machine.git
+cd float_time_machine
 ```
 Устанавливаем зависимости
 ```shell
 pip install -r requirements.txt
 ```
-Переходим в рабочую директорию и запускаем приложение
+Запускаем приложение
 ```shell
-cd float_time_machine
 streamlit run main.py
 ```
 
@@ -71,4 +71,4 @@ streamlit run main.py
 2. Организовать хранение данных в PostgreSQL
 3. Сделать потоковую обработку данных с датчиков флотомашин
 4. Сделать нормальное логирование
-5. 
+5. Добавить функционал добавления данных в обучающую выборку алгоритма оптимизации
