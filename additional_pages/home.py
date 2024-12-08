@@ -70,7 +70,7 @@ def show():
     # Рисуем кнопку начала обработки
     if st.button("Начать оптимизацию!"):
         # Проверяем наличие данных в сессии
-        if 'test_file' in st.session_state and 'uploaded_file' in st.session_state:
+        if st.session_state['test_file'] is not None and st.session_state['uploaded_file'] is not None:
             # Применяем разработанную модель
             optimization_result = model_pipeline(st.session_state['uploaded_file'], st.session_state['test_file'])
             st.write('Результат оптимизации')
@@ -84,3 +84,5 @@ def show():
         if st.button("Показать оптимизированные данные в текущей сессии"):
             st.write("Результаты оптимизации")
             st.write(st.session_state['optimization_result'])
+    else:
+        st.info("Пожалуйста, Загрузите обучающую и тестовую выборки")
