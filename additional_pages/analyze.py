@@ -21,7 +21,7 @@ def show():
 
     # Если данные имеются в сессии мы их отображаем
     if st.session_state['highlight_optimization_result'] is not None:
-        if st.button("Показать подсвеченные данные"):
+        if st.button("Показать отмеченные оптимизированные данные в текущей сессии"):
             st.write("Результаты оптимизации:")
             st.write(st.session_state['highlight_optimization_result'])
             st.write('** - отметки для оптимизированных значений')
